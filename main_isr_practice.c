@@ -4,7 +4,7 @@
 
 
 volatile int btn_flag = 0;
-volatile int capture_flag = 0;
+
 
 void btn_callback(uint gpio, uint32_t events) {
     if (events & GPIO_IRQ_EDGE_FALL) { 
@@ -13,6 +13,7 @@ void btn_callback(uint gpio, uint32_t events) {
 }
 
 int main() {
+    int capture_flag = 0;
     const int BTN_PIN_R = 28;
     stdio_init_all();
     gpio_init(BTN_PIN_R);
