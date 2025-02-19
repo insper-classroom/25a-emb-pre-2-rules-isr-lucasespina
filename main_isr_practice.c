@@ -13,7 +13,7 @@ void btn_callback(uint gpio, uint32_t events) {
 
 int main() {
     const int BTN_PIN_R = 28;
-    volatile int btn_flag = 0;
+    int btn_flag = 0;
     stdio_init_all();
     gpio_init(BTN_PIN_R);
     gpio_set_dir(BTN_PIN_R, GPIO_IN);
