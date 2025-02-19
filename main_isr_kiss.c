@@ -1,40 +1,36 @@
 #include "asf.h"
 #include <stdbool.h>
 
-volatile bool btn_pressed = false; 
-int g_cnt = 0;
-char g_str[10];
-int batata = 0;
+volatile bool btn_pressed = false; // Variável global necessária para a ISR
 
+// ISR: Apenas seta a flag para indicar que o botão foi pressionado.
 void btn_callback(void) {
     btn_pressed = true;
 }
 
-
-void update_progress_bar(void) {
-    if (g_cnt >= 8)
-        g_cnt = 0;
-    else
-        g_cnt++;
-
-    for (int i = 0; i < g_cnt; i++) {
-        g_str[i] = '*';
-    }
-    g_str[g_cnt] = '\0';  
-
-    gfx_mono_draw_string(g_str, 0, 0, &sysfont);
-}
-
 void main(void) {
+    int count = 0;
+    char progress[10] = {0};
+    int batata = 0;
 
     while (1) {
-
         if (btn_pressed) {
-            update_progress_bar();
-            btn_pressed = false; 
+            if (count >= 8)
+                count = 0;
+            else
+                count++;
+
+            for (int i = 0; i < count; i++) {
+                progress[i] = '*';
+            }
+            progress[count] = '\0';
+
+            gfx_mono_draw_string(progress, 0, 0, &sysfont);
+
+            btn_pressed = false;
         }
 
 
-        batata++; 
+        batata++;
     }
 }
